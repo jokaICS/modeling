@@ -1,0 +1,35 @@
+#     Project: openETCS
+#      Module: RBC-System / tests
+# Description: test01 - Train initiates communication, but no compatible version supported
+source lib.tcl
+source const.tcl
+
+set NID_ENGINE 4321
+
+# 0) -- (check initial values)
+rbc_check_TrainData [list nid_engine 0]
+rbc_check_PosData [list nid_lrbg 0]
+rbc_check_OutMsg_None
+SSM::cycle
+
+
+# 1) train initiates communication
+# in: MSG 155
+# out: MSG 32
+rbc_set_InMsg_155 2.0 $NID_ENGINE
+
+rbc_check_TrainData [list nid_engine $NID_ENGINE]
+rbc_check_PosData [list nid_lrbg $::const::NID_LRBG_UNKNOWN]
+rbc_check_OutMsg_32
+SSM::cycle
+
+rbc_set_InMsg_None
+rbc_check_OutMsg_None 3
+SSM::cycle 3
+
+# 5) train responds to MSG 32 with MSG 154 (No compatible version supported)
+# in: MSG 154
+rbc_set_InMsg_154 2.8 $NID_ENGINE
+
+SSM::cycle
+puts [rbc_get_OutMsgHeader]
