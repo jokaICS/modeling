@@ -68,6 +68,17 @@ proc rbc_set_InMsg_155 {t_train nid_engine} {
   rbc_set_InMsgHeader true 155 $t_train $nid_engine
 }
 
+# Input MSG 156
+proc rbc_set_InMsg_156 {t_train nid_engine} {
+  SSM::set "$::rbc/inRadioTrainTrackMsg.present" true
+  rbc_set_InMsgHeader true 156 $t_train $nid_engine
+}
+
+# Input MSG 159 (Session established)
+proc rbc_set_InMsg_159 {t_train nid_engine} {
+  SSM::set "$::rbc/inRadioTrainTrackMsg.present" true
+  rbc_set_InMsgHeader true 159 $t_train $nid_engine
+}
 
 ############################# CHECK #################################
 proc rbc_check_struct {path checks} {
@@ -98,4 +109,10 @@ proc rbc_check_OutMsg_32 {{t_train 20} {m_version 15}} {
                           m_ack $::const::M_ACK_No_acknowledgement_required\
                           m_version $m_version\
                           t_train $t_train]
+}
+
+proc rbc_check_OutMsg_39 {} {
+  rbc_check_OutMsgHeader [list nid_message 39\
+                          nid_lrbg $::const::NID_LRBG_UNKNOWN\
+                          m_ack $::const::M_ACK_No_acknowledgement_required]
 }

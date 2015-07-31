@@ -4,6 +4,8 @@
 source lib.tcl
 source const.tcl
 
+puts "running test01"
+
 set NID_ENGINE 4321
 
 # 0) -- (check initial values)
@@ -31,5 +33,26 @@ SSM::cycle 3
 # in: MSG 154
 rbc_set_InMsg_154 2.8 $NID_ENGINE
 
+rbc_check_TrainData [list nid_engine $NID_ENGINE]
+rbc_check_OutMsg_None
 SSM::cycle
-puts [rbc_get_OutMsgHeader]
+
+rbc_set_InMsg_None
+
+rbc_check_OutMsg_None
+SSM::cycle
+
+
+# 7) train terminates session, RBC acknowledges termination
+# in: MSG 156
+# out: MSG: 39
+rbc_set_InMsg_156 3.0 $NID_ENGINE
+
+rbc_check_TrainData [list nid_engine 0]
+rbc_check_OutMsg_39
+SSM::cycle
+
+rbc_set_InMsg_None
+
+rbc_check_OutMsg_None
+SSM::cycle
