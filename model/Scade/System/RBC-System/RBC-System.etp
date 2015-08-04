@@ -36,7 +36,7 @@
 			<value>52</value>
 		</Prop>
 		<Prop id="22" name="@GENERATOR:TARGET_DIR">
-			<value>C:\USERS\MASTE_000\DESKTOP\trash</value>
+			<value>$(Configuration)</value>
 			<configuration>21</configuration>
 		</Prop>
 		<Prop id="23" name="@VC6.0:ADD_COMP_OPTIONS">
